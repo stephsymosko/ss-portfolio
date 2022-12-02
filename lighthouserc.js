@@ -4,7 +4,8 @@ module.exports = {
       staticDistDir: './dist/apps/store',
     },
     upload: {
-      target: '.lighthouseci',
+      target: 'filesystem',
+      outputDir: '.lighthouseci'
     },
   },
 };
