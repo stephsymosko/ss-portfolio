@@ -4,7 +4,7 @@ module.exports = {
       staticDistDir: './dist/apps/store',
     },
     upload: {
-      target: 'temporary-public-storage',
+      target: '.lighthouseci',
     },
   },
 };
