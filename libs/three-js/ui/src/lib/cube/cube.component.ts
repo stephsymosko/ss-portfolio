@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
@@ -6,98 +6,56 @@ import * as THREE from 'three';
   templateUrl: './cube.component.html',
   styleUrls: ['./cube.component.scss'],
 })
-export class CubeComponent implements AfterViewInit {
+export class CubeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('canvas') private canvasRef: ElementRef;
 
-  /** Declare cube properties */
-  @Input() rotationSpeedX = 0.5;
-  @Input() rotationSpeedY = 0.1;
-  @Input() size = 200;
-  @Input() texture = 'assets/texture.jpg';
+  public renderer = new THREE.WebGLRenderer();
+  public camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
+  public scene = new THREE.Scene();
 
-  /** Declare stage properties */
-  @Input() cameraZ = 400;
-  @Input() fieldOfView = 1;
-  @Input() nearClippingPlane = 1;
-  @Input() farClippingPlane = 1000;
+  public material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 
-  /** Declare helper properties */
-  private camera!: THREE.PerspectiveCamera;
 
-  private get canvas(): HTMLCanvasElement {
-    return this.canvasRef.nativeElement;
+
+
+
+  ngOnInit() {
+    this.renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( this.renderer.domElement );
+    this.camera.position.set( 0, 0, 100 );
+    this.camera.lookAt( 0, 0, 0 );
+
+
+    const points = [];
+    points.push( new THREE.Vector3( - 10, 0, 0 ) );
+    points.push( new THREE.Vector3( 0, 10, 0 ) );
+    points.push( new THREE.Vector3( 10, 0, 0 ) );
+
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+    const line = new THREE.Line( geometry, this.material );
+
+    this.scene.add( line );
+    this.renderer.render( this.scene, this.camera )
+
   }
 
-  private loader = new THREE.TextureLoader();
-  private geometry = new THREE.BoxGeometry(1,1,1);
-  // private material = new THREE.MeshBasicMaterial({ map: this.loader.load(this.texture)});
-  private material = new THREE.MeshPhongMaterial({color: 0xe136a0});
-
-  private cube: THREE.Mesh = new THREE.Mesh(this.geometry, this.material);
-
-  private renderer!: THREE.WebGLRenderer;
-
-  private scene!: THREE.Scene;
 
 
-  /**
-   * @description Create the scene
-   */
 
-  private createScene() {
-    // Scene
-    this.scene = new THREE.Scene;
-    this.scene.background = new THREE.Color(0xc1c1c1);
-    this.scene.add(this.cube);
 
-    // Camera
-    const aspectRatio = this.getAspectRatio();
-    this.camera = new THREE.PerspectiveCamera(
-      this.fieldOfView,
-      aspectRatio,
-      this.nearClippingPlane,
-      this.farClippingPlane
-    )
-    this.camera.position.z = this.cameraZ;
-  }
 
-  /**
-   * @description determines aspect ratio based of canvas height and width
-   * @returns
-   */
-  private getAspectRatio() {
-    return this.canvas.clientWidth / this.canvas.clientHeight;
-  }
 
-  /**
-   * @description add cube rotations in incremental approach
-   */
-  private animateCube() {
-    this.cube.rotation.x += this.rotationSpeedX;
-    this.cube.rotation.y += this.rotationSpeedY;
-  }
 
-  /**
-   * @description Create a renderer function
-   */
-  private startRenderingLoop() {
-    // Use canvas element in template
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
-    this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
 
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const component: CubeComponent = this;
-    (function render() {
-      requestAnimationFrame(render);
-      component.animateCube();
-      component.renderer.render(component.scene, component.camera);
-    })
-  }
+
+
+
 
   ngAfterViewInit() {
-    this.createScene();
-    this.startRenderingLoop();
+    throw Error('No after view on init');
+    // this.createScene();
+    // this.startRenderingLoop();
   }
 }
