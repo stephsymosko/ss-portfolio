@@ -1,4 +1,5 @@
-import { Category, Product } from '@ngrx-nx-workshop/api-interfaces';
+import { Category, Product } from './interfaces/api-interfaces';
+
 
 export const data: Product[] = [
   {
