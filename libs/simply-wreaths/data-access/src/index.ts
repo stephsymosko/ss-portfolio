@@ -1,1 +1,1 @@
-export * from './lib/simply-wreaths-data-access.module';
+export * from './lib/data';
