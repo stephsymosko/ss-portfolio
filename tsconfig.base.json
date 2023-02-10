@@ -16,6 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@simply-wreaths/data-access": [
+        "libs/simply-wreaths/data-access/src/index.ts"
+      ],
       "@ss-portfolio/three-js/ui": ["libs/three-js/ui/src/index.ts"]
     }
   },
