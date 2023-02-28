@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BasicProduct, Product } from '@simply-wreaths/data-access';
 import { Observable } from 'rxjs';
+import { productsOpened } from './product-list.actions';
 
 @Component({
   selector: 'ss-portfolio-product-list',
@@ -15,5 +16,9 @@ export class ProductListComponent {
   products$: Observable<BasicProduct[]> = this.store.select(state=>state.product.products);
   constructor(
     // this is a generic type, so we can specify the type of the state
-    private readonly store: Store<{ product: { products: Product[] } }>  ) {}
+    private readonly store: Store<{ product: { products: Product[] } }>  ) {
+      this.store.dispatch(productsOpened());
+    }
+
+
 }
