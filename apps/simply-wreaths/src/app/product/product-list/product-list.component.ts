@@ -19,6 +19,4 @@ export class ProductListComponent {
     private readonly store: Store<{ product: { products: Product[] } }>  ) {
       this.store.dispatch(productsOpened());
     }
-
-
 }
