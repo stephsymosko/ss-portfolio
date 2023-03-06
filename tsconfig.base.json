@@ -19,6 +19,7 @@
       "@simply-wreaths/data-access": [
         "libs/simply-wreaths/data-access/src/index.ts"
       ],
+      "@simply-wreaths/ui": ["libs/libs/simply-wreaths/ui/src/index.ts"],
       "@ss-portfolio/three-js/ui": ["libs/three-js/ui/src/index.ts"]
     }
   },
