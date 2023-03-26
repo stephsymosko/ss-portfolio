@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@portfolio/ui": ["libs/libs/portfolio/ui/src/index.ts"],
       "@simply-wreaths/data-access": [
         "libs/simply-wreaths/data-access/src/index.ts"
       ],
